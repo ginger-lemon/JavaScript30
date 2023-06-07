@@ -59,27 +59,18 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
- 
- window.addEventListener('keydown', (e) => {
-      // 儲存按下按鍵的資訊
+
+  window.addEventListener('keydown', (e) => {
       const keyCode = e.keyCode;
 
-      // 透過 querySelector 抓取 data-key 屬性與 keyCode 值相同的 audio 元素
       const audioNode = document.querySelector(`audio[data-key = "${keyCode}"]`);
-      // 透過 querySelector 抓取 data-key 屬性與 keyCode 對應的 div 位置
       const keyDiv = document.querySelector(`.key[data-key = "${keyCode}"]`);
 
-      // 選到該 div 時 className 會增加 playing 顯示黃色框框
       keyDiv.classList.add('playing');
 
-      // 處理連續按相同按鈕只會出現一次音效的問題 
-      // 使用 HTMLMediaElement.currentTime ：該屬性以秒為單位回傳該媒體元素的播放時間
-      // 對應到 react ref 存放聲音的 id ，但
       audioNode.currentTime = 0;
       audioNode.play();
 
-      // 聲音播放結束後移除 className 
-      // keyDiv.classList.remove('playing');
       window.addEventListener('keyup', (e) => {
         keyDiv.classList.remove("playing");
       })
