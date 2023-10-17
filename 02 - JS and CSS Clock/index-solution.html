@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+    <script>
+      const secondHand = document.querySelector('.second-hand')
+      const minuteHand = document.querySelector('.min-hand')
+      const hourHand = document.querySelector('.hour-hand')
+
+      const setTime = () => {
+        const time = new Date()
+        const seconds = time.getSeconds()
+        const minutes = time.getMinutes()
+        const hours = time.getHours()
+
+        let secondsDegree = seconds / 60 * 360
+        let minutesDegree = minutes / 60 * 360
+        let hoursDegree = hours / 12 * 360
+
+        // 秒針/分針為 0 時轉回去，分別控制動畫效果，避免 .hand 影響其他元素
+        const setRotatedHand = (degree, element) => {
+        if (degree === 0)  {
+          element.style.transition = 'all 0s'
+          element.style.transitionTimingFunction = `cubic-bezier(0, 4.02, 0.91, 0.09)`;
+        } else if (degree !== 0) {
+          element.style.transition = 'all 0.5s linear'
+          element.style.transitionTimingFunction = 'cubic-bezier(0, 4.02, 0.91, 0.09)';
+        }
+
+        return element.style.transform = `rotate(${degree}deg)`
+      }
+
+        setRotatedHand(secondsDegree, secondHand)
+        setRotatedHand(minutesDegree, minuteHand)
+        setRotatedHand(hoursDegree, hourHand)
+      }
+
+      setInterval(setTime, 1000)
+    
+    </script>
+</body>
+</html>
